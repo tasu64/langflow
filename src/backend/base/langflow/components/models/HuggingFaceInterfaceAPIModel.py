@@ -1,6 +1,6 @@
 import requests
 from typing import Optional
-from langchain.llms.base import BaseLLM
+from langflow.field_typing import Text
 from langflow import CustomComponent
 
 def query(payload, api_url, huggingfacehub_api_token):
@@ -35,10 +35,10 @@ class HuggingFaceEndpointsComponent(CustomComponent):
 
     def build(
         self,
-        payload,
+        payload: Text,
         api_url: str,
         huggingfacehub_api_token: Optional[str] = None,
-    ) -> BaseLLM:
+    ) -> Text:
         try:
             output = query(  # type: ignore
                 payload=payload,
