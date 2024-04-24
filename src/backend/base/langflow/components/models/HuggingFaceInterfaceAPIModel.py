@@ -1,25 +1,35 @@
 import requests
+from typing import Optional
+from langchain.llms.base import BaseLLM
+from langflow import CustomComponent
 
-API_URL = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-8B"
-headers = {"Authorization": "Bearer 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"}
-
-def query(payload):
-	response = requests.post(API_URL, headers=headers, json=payload)
+def query(payload, api_url, huggingfacehub_api_token):
+	response = requests.post(api_url, headers='"Authorization": "Bearer {huggingfacehub_api_token}"', json=payload)
 	return response.json()
 	
 # output = query({
 # 	"inputs": "Can you please let us know more details about your ",
 # })
 
-class HuggingFaceServerlessComponent(CustomComponent):
+class HuggingFaceEndpointsComponent(CustomComponent):
     display_name: str = "Hugging Face Inference API"
     description: str = "LLM model from Hugging Face Inference API."
 
     def build_config(self):
         return {
-            "payload": {"display_name": "Payload"},
-            "API_URL": {"display_name": "Endpoint URL", "password": True},
-            "huggingfacehub_api_token": {"display_name": "API token", "password": True},
+            payload: {
+              display_name: "Payload",
+              required: True,
+            },
+            API_URL: {
+              "display_name": "Endpoint URL",
+              "required": True,
+            },
+            "huggingfacehub_api_token": {
+              "display_name": "API token",
+              "password": True,
+              "required": True,
+            },
         }
 
     def build(
