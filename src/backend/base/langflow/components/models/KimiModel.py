@@ -30,7 +30,7 @@ class KimiComponent(CustomComponent):
   def query(self, payload, kimi_api_token, temperature):
     headers = {
       "Content-Type": "application/json",
-      "Authorization": f"Bearer {kimi_api_token}",
+      "Authorization": f"Bearer {kimi_api_token}"
     }
     data = {
       "model": self.model_name,
@@ -40,6 +40,7 @@ class KimiComponent(CustomComponent):
       }],
       "temperature": temperature,
     }
+    logging.info(f"Sending request to Kimi API: {data}, headers: {headers}")
     response = requests.post(self.api_url, headers=headers, json=data)
     return response.json()
 
