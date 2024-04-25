@@ -29,7 +29,8 @@ class KimiComponent(CustomComponent):
 
   def query(self, payload, kimi_api_token, temperature):
     headers = {
-      "Authorization": f"Bearer {kimi_api_token}"
+      "Content-Type: application/json",
+      "Authorization": f"Bearer {kimi_api_token}",
     }
     data = {
       "model": self.model_name,
