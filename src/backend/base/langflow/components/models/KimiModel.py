@@ -2,6 +2,7 @@ import requests
 from typing import Optional
 from langflow.field_typing import Text
 from langflow import CustomComponent
+from loguru import logger
 
 class KimiComponent(CustomComponent):
   display_name: str = "Kimi"
@@ -40,7 +41,8 @@ class KimiComponent(CustomComponent):
       }],
       "temperature": temperature,
     }
-    logging.info(f"Sending request to Kimi API: {data}, headers: {headers}")
+    logger.info(f"Sending request to Kimi API: {data}, headers: {headers}")
+    
     response = requests.post(self.api_url, headers=headers, json=data)
     return response.json()
 
